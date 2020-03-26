@@ -1,4 +1,3 @@
-# bot.py
 import os
 
 import discord
@@ -22,18 +21,14 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
     print(f'Listening on channel {STATS_CHANNEL}')
 
-    stats_channel = None
-    for guild in bot.guilds:
-        for channel in guild.text_channels:
-            if check_channel(channel):
-                stats_channel = channel
-                break
-        if stats_channel is not None:
-            break
+    channel = discord.utils.get(bot.guilds[0].text_channels, name=STATS_CHANNEL)
 
-    pins = await stats_channel.pins()
-    for pin in pins:
-        print(pin)
+    pins = await channel.pins()
+
+    pin = discord.utils.get(pins, author=bot)
+    if pin is None:
+        message = await channel.send('stats')
+        message.pin()
 
 
 @bot.command(name='stats', help='show current stats')
