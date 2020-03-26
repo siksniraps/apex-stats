@@ -14,7 +14,7 @@ bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 
 def check_channel(channel):
-    return channel == STATS_CHANNEL
+    return channel.name == STATS_CHANNEL
 
 
 @bot.event
