@@ -8,8 +8,13 @@ from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
+STATS_CHANNEL = os.getenv('STATS_CHANNEL')
 
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
+
+
+def check_channel(channel):
+    return channel == STATS_CHANNEL
 
 
 @bot.event
@@ -19,6 +24,8 @@ async def on_ready():
 
 @bot.command(name='stats', help='show current stats')
 async def stats(ctx):
+    if not check_channel(ctx.channel):
+        return
     await ctx.send('stats')
 
 
