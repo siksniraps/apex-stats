@@ -100,7 +100,7 @@ def create_message_text():
     text += '\n'
 
     for key in sorted(most):
-        value = least[key]
+        value = most[key]
         damage = value[0]
         player = value[1]
         text += f'{key}: {damage}'
