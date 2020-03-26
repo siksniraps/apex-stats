@@ -10,7 +10,7 @@ COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
 STATS_CHANNEL = os.getenv('STATS_CHANNEL')
 
 STATS_TEMPLATE = '''
-
+STATS
 **Least:**
 
 **Most:**
@@ -77,6 +77,53 @@ async def on_ready():
 async def stats(ctx):
     if not check_channel(ctx.channel):
         return
+    await ctx.send(pin.content)
+
+
+def create_message_text():
+    text = '\n'
+    text += LEAST_HEADER
+
+    for key in sorted(least):
+        value = least[key]
+        damage = value[0]
+        player = value[1]
+        text += f'{key}: {damage}'
+        if player is None:
+            text += '\n'
+        else:
+            text += f' {player}\n'
+
+    text += '\n'
+    text += MOST_HEADER
+
+    for key in sorted(most):
+        value = least[key]
+        damage = value[0]
+        player = value[1]
+        text += f'{key}: {damage}'
+        if player is None:
+            text += '\n'
+        else:
+            text += f' {player}\n'
+
+    text += '\n'
+    return text
+
+
+@bot.command(name='add', help='add or eddit a stat')
+async def stats(ctx, stat_type, kills, damage, player):
+    if not check_channel(ctx.channel):
+        return
+
+    if stat_type == 'least':
+        least[kills] = (damage, player)
+    elif stat_type == 'most':
+        most[kills] = (damage, player)
+    else:
+        return
+
+    await pin.edit(create_message_text())
     await ctx.send(pin.content)
 
 
