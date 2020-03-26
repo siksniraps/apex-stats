@@ -28,7 +28,7 @@ async def on_ready():
     pin = discord.utils.get(pins, author=bot)
     if pin is None:
         message = await channel.send('stats')
-        message.pin()
+        await message.pin()
 
 
 @bot.command(name='stats', help='show current stats')
