@@ -63,7 +63,7 @@ async def on_ready():
         ind_least = lines.index(LEAST_HEADER)
         ind_most = lines.index(MOST_HEADER)
         least_lines = lines[(ind_least + 1):(ind_most - 1)]
-        most_lines = lines[(ind_most + 1):(len(lines) - 1)]
+        most_lines = lines[(ind_most + 1):len(lines)]
         for line in least_lines:
             kills, *tail = parse_line(line)
             least[kills] = tail
