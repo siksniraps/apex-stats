@@ -40,6 +40,7 @@ async def on_ready():
     if pin is None:
         message = await channel.send(STATS_TEMPLATE)
         await message.pin()
+        pin = message
 
 
 @bot.command(name='stats', help='show current stats')
