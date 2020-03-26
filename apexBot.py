@@ -9,21 +9,38 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
 STATS_CHANNEL = os.getenv('STATS_CHANNEL')
 
+STATS_TEMPLATE = '''
+
+**Least:**
+
+**Most:**
+
+'''
+
+LEAST_HEADER = '**Least:**'
+MOST_HEADER = '**Most:**'
+
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 pin = None
+
+least = {}
+most = {}
 
 
 def check_channel(channel):
     return channel.name == STATS_CHANNEL
 
 
-STATS_TEMPLATE = """
-**Least:**
-
-**Most:**
-
-"""
+def parse_line(line):
+    parts = line.split(': ')
+    tail_parts = parts[1].split(' ')
+    kills = parts[0]
+    damage = tail_parts[0]
+    player = ''
+    if len(tail_parts) > 1:
+        player = tail_parts[1]
+    return kills, damage, player
 
 
 @bot.event
@@ -41,6 +58,19 @@ async def on_ready():
         message = await channel.send(STATS_TEMPLATE)
         await message.pin()
         pin = message
+    else:
+        lines = pin.content.splitlines()
+        ind_least = lines.index(LEAST_HEADER)
+        ind_most = lines.index(MOST_HEADER)
+        least_lines = lines[(ind_least + 1):(ind_most - 1)]
+        most_lines = lines[(ind_most + 1):(len(lines) - 1)]
+        for line in least_lines:
+            kills, *tail = parse_line(line)
+            least[kills] = tail
+
+        for line in most_lines:
+            kills, *tail = parse_line(line)
+            most[kills] = tail
 
 
 @bot.command(name='stats', help='show current stats')
