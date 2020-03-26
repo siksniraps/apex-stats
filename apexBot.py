@@ -114,7 +114,7 @@ def create_message_text():
 
 
 @bot.command(name='add', help='add or edit a stat (add least/most {kills} {damage} {name)')
-async def stats(ctx, stat_type, kills, damage, player):
+async def stats(ctx, stat_type, kills, damage, player=None):
     if not check_channel(ctx.channel):
         return
 
