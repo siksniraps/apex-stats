@@ -81,8 +81,9 @@ async def stats(ctx):
 
 
 def create_message_text():
-    text = '\n'
+    text = 'STATS\n'
     text += LEAST_HEADER
+    text += '\n'
 
     for key in sorted(least):
         value = least[key]
@@ -96,6 +97,7 @@ def create_message_text():
 
     text += '\n'
     text += MOST_HEADER
+    text += '\n'
 
     for key in sorted(most):
         value = least[key]
