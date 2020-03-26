@@ -111,7 +111,7 @@ def create_message_text():
     return text
 
 
-@bot.command(name='add', help='add or eddit a stat')
+@bot.command(name='add', help='add or edit a stat (add least/most {kills} {damage} {name)')
 async def stats(ctx, stat_type, kills, damage, player):
     if not check_channel(ctx.channel):
         return
@@ -123,7 +123,7 @@ async def stats(ctx, stat_type, kills, damage, player):
     else:
         return
 
-    await pin.edit(create_message_text())
+    await pin.edit(content=create_message_text())
     await ctx.send(pin.content)
 
 
