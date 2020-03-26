@@ -85,8 +85,8 @@ def create_message_text():
     text += LEAST_HEADER
     text += '\n'
 
-    for key in sorted(least):
-        value = least[key]
+    for key in sorted(list(map(int, least))):
+        value = least[str(key)]
         damage = value[0]
         player = value[1]
         text += f'{key}: {damage}'
@@ -99,8 +99,8 @@ def create_message_text():
     text += MOST_HEADER
     text += '\n'
 
-    for key in sorted(most):
-        value = most[key]
+    for key in sorted(list(map(int, most))):
+        value = most[str(key)]
         damage = value[0]
         player = value[1]
         text += f'{key}: {damage}'
