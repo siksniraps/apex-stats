@@ -18,6 +18,14 @@ def check_channel(channel):
     return channel.name == STATS_CHANNEL
 
 
+STATS_TEMPLATE = """
+**Least:**
+
+**Most:**
+
+"""
+
+
 @bot.event
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
@@ -30,7 +38,7 @@ async def on_ready():
     global pin
     pin = discord.utils.get(pins, author=bot.user)
     if pin is None:
-        message = await channel.send('stats')
+        message = await channel.send(STATS_TEMPLATE)
         await message.pin()
 
 
