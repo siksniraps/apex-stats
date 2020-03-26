@@ -25,7 +25,7 @@ async def on_ready():
 
     pins = await channel.pins()
 
-    pin = discord.utils.get(pins, author=bot)
+    pin = discord.utils.get(pins, author=bot.user)
     if pin is None:
         message = await channel.send('stats')
         await message.pin()
