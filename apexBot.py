@@ -20,6 +20,7 @@ def check_channel(channel):
 @bot.event
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
+    print(f'Listening on channel {STATS_CHANNEL}')
 
 
 @bot.command(name='stats', help='show current stats')
